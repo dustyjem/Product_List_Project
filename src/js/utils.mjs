@@ -10,7 +10,7 @@ export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
 // save data to local storage
-export function setLocalStorage(key, data) {
+export default function setLocalStorage(key, data) {
   var currentCart = getLocalStorage(key)
   if(!currentCart){
     currentCart = [];
@@ -18,6 +18,15 @@ export function setLocalStorage(key, data) {
   currentCart.push(data)
   localStorage.setItem(key, JSON.stringify(currentCart))
 }
+
+export function getParam(param){
+  const queryString = window.location.search
+  const urlParams = new URLSearchParams(queryString)
+  const product = urlParams.get(param)
+  return product;
+}
+
+
 
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
@@ -27,3 +36,4 @@ export function setClick(selector, callback) {
   });
   qs(selector).addEventListener("click", callback);
 }
+
