@@ -26,6 +26,13 @@ export function getParam(param){
   return product;
 }
 
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.insertAdjacentHTML("afterbegin", template);
+  if(callback) {
+      callback(data);
+  }
+}
+
 
 
 // set a listener for both touchend and click
