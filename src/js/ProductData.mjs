@@ -1,23 +1,20 @@
-function convertToJson(res) {
-  if (res.ok) {
-    return res.json();
-  } else {
-    throw new Error("Bad Response");
-  }
-}
+import { convertToJson } from "./utils.mjs";
+
+const baseURL = "https://wdd330-backend.onrender.com/";
 
 export default class ProductData {
-  constructor(category) {
-    this.category = category;
-    this.path = `../json/${this.category}.json`;
+  async getData(category) {
+    const response = await fetch(baseURL + `products/search/${category}`);
+    const data = await convertToJson(response);
+    return data.Result;
   }
-  getData() {
-    return fetch(this.path)
-      .then(convertToJson)
-      .then((data) => data);
+  async getProduct(id) {
+    const response = await fetch(baseURL + `product/${id}`);
+    const data = await convertToJson(response);
+    return data.Result;
   }
   async findProductById(id) {
-    const products = await this.getData();
-    return products.find((item) => item.Id === id);
+    const product = await this.getProduct(id);
+    return product;
   }
 }

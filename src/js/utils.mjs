@@ -10,31 +10,17 @@ export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
 // save data to local storage
-export default function setLocalStorage(key, data) {
-  var currentCart = getLocalStorage(key)
-  if(!currentCart){
-    currentCart = [];
-  }
-  currentCart.push(data)
-  localStorage.setItem(key, JSON.stringify(currentCart))
-}
-
-export function getParam(param){
-  const queryString = window.location.search
-  const urlParams = new URLSearchParams(queryString)
-  const product = urlParams.get(param)
-  return product;
+export function setLocalStorage(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
 }
 
 export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = ``;
   parentElement.insertAdjacentHTML("afterbegin", template);
-  if(callback) {
-      callback(data);
+  if (callback) {
+    callback(data);
   }
 }
-
-
-
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
@@ -44,3 +30,34 @@ export function setClick(selector, callback) {
   qs(selector).addEventListener("click", callback);
 }
 
+// get the browser url
+export const getParams = (param) => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const product = urlParams.get(param);
+  return product;
+};
+
+// converting to json
+export function convertToJson(res) {
+  if (res.ok) {
+    return res.json();
+  } else {
+    throw new Error("Bad Response");
+  }
+}
+
+async function loadTemplate(path) {
+  const response = await fetch(path);
+  const template = response.text();
+  return template;
+}
+
+export async function loadHeaderFooter(location) {
+  const footer = await loadTemplate(location + `footer.html`);
+  const header = await loadTemplate(location + `header.html`);
+  const footerElement = document.querySelector("footer");
+  const headerElement = document.querySelector("header");
+  renderWithTemplate(header, headerElement);
+  renderWithTemplate(footer, footerElement);
+}
