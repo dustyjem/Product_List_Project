@@ -23,6 +23,8 @@ body {
   font-family: var(--font-body);
   font-size: var(--font-base);
   color: var(--dark-grey);
+  background-image: url("")
+
 }
 
 img {
@@ -442,4 +444,34 @@ button {
 footer {
   font-size: var(--small-font);
   padding: 1em;
+}
+
+.product-card:hover {
+  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  background-color:#C5B4A2;
+  transition: transform 1.2s;
+}
+
+.product-card:hover {
+  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  background-color:#C5B4A2;
+  transition: transform 1.2s;
+}
+
+#search_bar{
+  width: 200px;
+  margin-top: 10px;
+}
+
+#search_space{
+  height: 35px;
+  width: 100%;
+  border: 3px solid green;
+  
+}
+.srch{
+  margin: auto;
+  width: 75%;
+  border: 3px solid green;
+  padding: 10px;
 }
