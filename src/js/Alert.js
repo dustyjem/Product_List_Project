@@ -1,54 +1,58 @@
 import { convertToJson } from "./utils.mjs";
-export default class Alert {
+
+class Alert {
   constructor() {
     this.path = `../json/alerts.json`;
     this.mainElement = document.querySelector("main");
+    this.alerts = [];
+    this.element = null;
     this.init();
   }
 
   async init() {
-    this.alerts = await this.getData();
-    this.mainElement.insertAdjacentHTML(`beforebegin`, this.alertTemplate());
-    this.renderAlertList();
-  }
-
-  // get alerts.json data
-  getData() {
-    return fetch(this.path)
-      .then(convertToJson)
-      .then((data) => data);
-  }
-
-  // alert template
-  alertTemplate() {
-    return `<section class="alert-list">
-    </section>`;
-  }
-
-  renderAlertList() {
-    const alertList = this.alerts.map(
-      (alert) =>
-        `<p class="alert" style="background-color:${alert.background};color:${alert.color};">${alert.message}</p>`
-    );
-    const element = document.querySelector(`.alert-list`);
-    // send alerts after 2 seconds
+    await this.getData();
+    this.insertAlertList();
     setTimeout(() => {
-      element.innerHTML = alertList.join(``);
-      this.removeAlertList();
+      this.renderAlertList();
     }, 2000);
   }
 
-  removeAlertList() {
-    const parent = document.querySelector(`.alert-list`);
-    const elements = document.querySelectorAll(`.alert`);
-    elements.forEach((item) => {
-      // add class for animation at the last second
+  async getData() {
+    try {
+      const response = await fetch(this.path);
+      this.alerts = await response.json();
+    } catch (error) {
+      console.error(`Failed to fetch alerts: ${error}`);
+    }
+  }
+
+  insertAlertList() {
+    const section = document.createElement("section");
+    section.classList.add("alert-list");
+    this.mainElement.insertAdjacentElement(`beforebegin`, section);
+    this.element = section;
+  }
+
+  renderAlertList() {
+    const alertList = this.alerts.map((alert) => {
+      const p = document.createElement("p");
+      p.classList.add("alert");
+      p.style.backgroundColor = alert.background;
+      p.style.color = alert.color;
+      p.textContent = alert.message;
+      return p;
+    });
+
+    alertList.forEach((p) => {
+      this.element.appendChild(p);
       setTimeout(() => {
-        item.setAttribute(`class`, `alert alert-out`);
+        p.classList.add("alert-out");
       }, 9000);
       setTimeout(() => {
-        parent.removeChild(item);
+        this.element.removeChild(p);
       }, 10000);
     });
   }
 }
+
+export default Alert;
