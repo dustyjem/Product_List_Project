@@ -5,9 +5,17 @@ import { loadHeaderFooter } from "./utils.mjs";
 
 const alerts = new Alert();
 
-const dataSource = new ProductData();
-const productListElement = document.querySelector(".product-list");
-const productList = new ProductListing("tents", dataSource, productListElement);
+const init = async () => {
+  try {
+    const dataSource = new ProductData();
+    const productListElement = document.querySelector(".product-list");
+    const productList = new ProductListing("tents", dataSource, productListElement);
+    await productList.init();
+    loadHeaderFooter("./partials/");
+  } catch (error) {
+    alerts.showError("Error loading product list.");
+    console.error(error);
+  }
+};
 
-productList.init();
-loadHeaderFooter("./partials/");
+init();

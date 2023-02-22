@@ -1,8 +1,10 @@
-export default class ProductListing {
+class ProductListing {
   constructor(category, dataSource, listElement) {
     this.category = category;
     this.dataSource = dataSource;
     this.listElement = listElement;
+    this.productCardTemplate = this.productCardTemplate.bind(this);
+    this.init = this.init.bind(this);
   }
 
   productCardTemplate(product) {
@@ -18,29 +20,29 @@ export default class ProductListing {
         <h3 class="product-card__price">${product.FinalPrice}</h3></a>
       </li>`;
   }
+
   async init() {
     const list = await this.dataSource.getData(this.category);
-
     const filteredList = this.filterProduct(list);
     this.renderProductCategory(this.category);
     this.renderList(filteredList);
   }
 
   renderProductCategory(category) {
-    document.querySelector(`.products h2`).innerHTML = "";
-    document.querySelector(
-      `.products h2`
-    ).innerHTML = `Top Products: ${category}`;
+    const headingElement = this.listElement.parentElement.querySelector("h2");
+    headingElement.innerHTML = `Top Products: ${category}`;
   }
 
   renderList(list) {
-    const render = list.map(this.productCardTemplate);
-    this.listElement.insertAdjacentHTML("afterbegin", render.join(""));
+    const html = list.map(this.productCardTemplate).join("");
+    this.listElement.innerHTML = html;
   }
 
   filterProduct(productList) {
     return productList.filter(
-      (product) => product.Id != "989CG" && product.Id != "880RT"
+      (product) => product.Id !== "989CG" && product.Id !== "880RT"
     );
   }
 }
+
+export default ProductListing;
