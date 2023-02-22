@@ -1,56 +1,70 @@
 import { convertToJson } from "./utils.mjs";
 
-class Alert {
+export default class Alert {
   constructor() {
     this.path = `../json/alerts.json`;
     this.mainElement = document.querySelector("main");
-    this.alerts = [];
-    this.element = null;
+    this.alerts = null;
+    this.alertList = null;
+    this.renderedAlerts = new Set();
+    this.alertTimeoutId = null;
     this.init();
   }
 
   async init() {
-    await this.getData();
-    this.insertAlertList();
-    setTimeout(() => {
-      this.renderAlertList();
+    this.alerts = await this.fetchData();
+    this.alertList = this.createAlertList();
+    this.mainElement.insertAdjacentElement("afterbegin", this.alertList);
+    this.startAlertTimeout();
+  }
+
+  async fetchData() {
+    const response = await fetch(this.path);
+    const data = await convertToJson(response);
+    return data;
+  }
+
+  createAlertList() {
+    const alertList = document.createElement("section");
+    alertList.classList.add("alert-list");
+    return alertList;
+  }
+
+  startAlertTimeout() {
+    this.alertTimeoutId = setTimeout(() => {
+      this.removeAlertList();
     }, 2000);
   }
 
-  async getData() {
-    try {
-      const response = await fetch(this.path);
-      this.alerts = await response.json();
-    } catch (error) {
-      console.error(`Failed to fetch alerts: ${error}`);
+  renderAlertList() {
+    for (const alert of this.alerts) {
+      if (!this.renderedAlerts.has(alert)) {
+        const alertElement = this.createAlertElement(alert);
+        this.alertList.appendChild(alertElement);
+        this.renderedAlerts.add(alert);
+      }
     }
   }
 
-  insertAlertList() {
-    const section = document.createElement("section");
-    section.classList.add("alert-list");
-    this.mainElement.insertAdjacentElement(`beforebegin`, section);
-    this.element = section;
+  createAlertElement(alert) {
+    const alertElement = document.createElement("p");
+    alertElement.classList.add("alert");
+    alertElement.style.backgroundColor = alert.background;
+    alertElement.style.color = alert.color;
+    alertElement.textContent = alert.message;
+    return alertElement;
   }
 
-  renderAlertList() {
-    const alertList = this.alerts.map((alert) => {
-      const p = document.createElement("p");
-      p.classList.add("alert");
-      p.style.backgroundColor = alert.background;
-      p.style.color = alert.color;
-      p.textContent = alert.message;
-      return p;
-    });
+  removeAlertList() {
+    for (const alertElement of this.alertList.children) {
+      alertElement.classList.add("alert-out");
+    }
 
-    alertList.forEach((p) => {
-      this.element.appendChild(p);
-      setTimeout(() => {
-        p.classList.add("alert-out");
-      }, 9000);
-      setTimeout(() => {
-        this.element.removeChild(p);
-      }, 10000);
-    });
+    setTimeout(() => {
+      this.alertList.innerHTML = "";
+      this.renderedAlerts.clear();
+      this.alertTimeoutId = null;
+      this.init();
+    }, 10000);
   }
 }
