@@ -96,7 +96,7 @@ header {
   color: var(--tertiary-color);
 }
 
-button {
+button, .checkout_ {
   padding: 0.5em 2em;
   background-color: #659DBD;
   color: white;

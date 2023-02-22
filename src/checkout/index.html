@@ -12,7 +12,7 @@
     <main class="divider checkout">
       <h2>Review & Place your Order</h2>
       <section class="checkout-form">
-        <form name="checkout">
+        <form name="checkout" method="get" action="../checkout/success.html">
           <fieldset>
             <legend>Shipping</legend>
             <div class="checkout__name">
@@ -65,7 +65,7 @@
             </ul>
           </fieldset>
 
-          <button id="checkoutSubmit" type="submit">Checkout</button>
+          <input type="submit" value="submit" class="checkout_">
         </form>
       </section>
     </main>
