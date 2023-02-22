@@ -37,7 +37,7 @@ class ShoppingCart {
     return `<li class="cart-card divider">
       <a href="#" class="cart-card__image">
         <img
-          src="${item.Image}"
+          src="${item.Image || item.Images}"
           alt="${item.Name}"
         />
       </a>
@@ -47,7 +47,7 @@ class ShoppingCart {
       <p class="cart-card__color">${item.Colors[0].ColorName}</p>
       <p class="cart-card__quantity">qty: 1</p>
       <p class="cart-card__price">$${item.FinalPrice}</p>
-      <span class="cart-card__remove" data-id=${item.Id}>X</span>
+      <span class="cart-card__remove" data-id=${item.Id}>❌</span>
     </li>`;
   }
 

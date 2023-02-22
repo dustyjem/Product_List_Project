@@ -98,13 +98,19 @@ header {
 
 button {
   padding: 0.5em 2em;
-  background-color: var(--secondary-color);
+  background-color: #659DBD;
   color: white;
   margin: auto;
   display: block;
-  border: 0;
+  border: 5px;
   font-size: var(--large-font);
   cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  background-color:#659DBD;
+  transition: transform 1.2s;
 }
 
 .divider {
@@ -444,12 +450,6 @@ button {
 footer {
   font-size: var(--small-font);
   padding: 1em;
-}
-
-.product-card:hover {
-  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-  background-color:#C5B4A2;
-  transition: transform 1.2s;
 }
 
 .product-card:hover {

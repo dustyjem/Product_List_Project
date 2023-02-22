@@ -84,6 +84,10 @@ export default class CheckoutProcess {
     json.shipping = this.shipping;
     json.items = packageItems(this.list);
     console.log(json);
+    if (this.validateForm()) {
+      const checkoutPageUrl = "./checkout/index.html";
+      window.location.href = checkoutPageUrl;
+    }
     try {
       const res = await services.checkout(json);
       console.log(res);

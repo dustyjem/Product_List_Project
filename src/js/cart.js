@@ -7,7 +7,7 @@ const init = async () => {
 
   // Render shopping cart
   const shoppingCart = new ShoppingCart(`.product-list`, `so-cart`);
-  await shoppingCart.init();
+  shoppingCart.init();
 
   // Show checkout button and total if there are items in the cart
   const cart = getLocalStorage("cart");
