@@ -41,6 +41,7 @@ export default class ProductDetails {
     setLocalStorage("so-cart", this.products);
     const badge = this.renderSuperscript(this.products);
     const bagParent = document.querySelector(`.cart a`);
+    alert("Successfully added to cart")
     renderWithTemplate(
       this.bagTemplate(),
       bagParent,
