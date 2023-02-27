@@ -452,12 +452,19 @@ footer {
   padding: 1em;
 }
 
+.cart-card__remove:hover{
+  transform: scale(2.5);
+  transition: transform 1.2s;
+}
 .product-card:hover {
   transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
   background-color:#C5B4A2;
   transition: transform 1.2s;
 }
-
+.cart:hover{
+  transform: scale(2.5);
+  transition: transform 1.2s;
+}
 #search_bar{
   width: 200px;
   margin-top: 10px;
