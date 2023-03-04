@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sleep Outside | Home</title>
+    <link rel="stylesheet" href="/css/style.css" />
 
-    <title>Sleep Outside | Cedar Ridge Rimrock 2-person tent</title>
+    <script type="module">
+      
+      import { loadHeaderFooter } from "../js/utils.mjs";
+      import Admin from "../js/Admin.mjs";
 
-    <link rel="stylesheet" href="../css/style.css" />
-
-    <script src="../js/product.js" type="module"></script>
+      loadHeaderFooter();
+      const myAdmin = new Admin("main");
+      myAdmin.showLogin();
+    </script>
   </head>
-
   <body>
-    <header class="divider"></header>
-
-    <main>
-     
-    </main>
-
-    <footer></footer>
+    <header class="divider" id="main-header"></header>
+    <main class="divider"></main>
+    <footer id="main-footer"></footer>
   </body>
 </html>

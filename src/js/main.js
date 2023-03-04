@@ -14,7 +14,7 @@ const init = async () => {
     loadHeaderFooter("./partials/");
   } catch (error) {
     alerts.showError("Error loading product list.");
-    console.error(error);
+    // console.error(error);
   }
 };
 

@@ -1,6 +1,6 @@
 import ProductData from "./ProductData.mjs";
 import ProductDetails from "./ProductDetails.mjs";
-import { setLocalStorage, getParams, loadHeaderFooter } from "./utils.mjs";
+import {getParams, loadHeaderFooter } from "./utils.mjs";
 
 // Initialize ProductDetails component
 function initProductDetails() {
