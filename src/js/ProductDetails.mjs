@@ -78,6 +78,7 @@ export default class ProductDetails {
   }
 
   renderProductDetails(product) {
+    console.log(product);
     const newItem = `
       <h3>${product.Brand.Name}</h3>
 
@@ -85,7 +86,7 @@ export default class ProductDetails {
 
       <img
         class="divider"
-        src="${product.Images.PrimaryLarge}"
+        src="${product.Images.ExtraImages[0].Src}"
         alt="${product.Name}"
       />
 

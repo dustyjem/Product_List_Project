@@ -23,6 +23,7 @@ class ProductListing {
 
   async init() {
     const list = await this.dataSource.getData(this.category);
+    console.log(list);
     const filteredList = this.filterProduct(list);
     this.renderProductCategory(this.category);
     this.renderList(filteredList);
