@@ -10,6 +10,7 @@ export default class ProductDetails {
     this.dataSource = dataSource;
     this.product = {};
     this.products =
+    this.indexpicture = 0
       getLocalStorage(`so-cart`) === null ? [] : getLocalStorage(`so-cart`);
     this.init();
   }
@@ -17,11 +18,14 @@ export default class ProductDetails {
   async init() {
     this.product = await this.dataSource.findProductById(this.productId);
     document.querySelector(`.product-detail`).innerHTML =
-      this.renderProductDetails(this.product);
+      this.renderProductDetails(this.product, this.indexpicture);
     // add listener to Add to Cart button
     document
       .getElementById("addToCart")
       .addEventListener("click", this.addToCart.bind(this));
+
+    const nextbutton = document.getElementById("next").addEventListener('click', ()=> this.nextpicture())
+    const backbutton = document.getElementById("back").addEventListener('click', ()=> this.backpicture())
   }
 
   renderBagAnimation(data) {
@@ -77,7 +81,27 @@ export default class ProductDetails {
   </svg>`;
   }
 
-  renderProductDetails(product) {
+  nextpicture(){
+    this.indexpicture += 1
+    this.init();
+    console.log(this.indexpicture)
+  }
+
+  backpicture(){
+    
+      this.indexpicture -= 1
+      this.init();
+   
+    console.log(this.indexpicture)
+  }
+
+
+
+  renderProductDetails(product, indexpicture) {
+    console.log(product);
+
+    let img1 = [product.Images.ExtraImages[0].Src, product.Images.ExtraImages[1].Src, product.Images.ExtraImages[2].Src]
+
     const newItem = `
       <h3>${product.Brand.Name}</h3>
 
@@ -85,10 +109,11 @@ export default class ProductDetails {
 
       <img
         class="divider"
-        src="${product.Images.PrimaryLarge}"
+        src="${img1[indexpicture]}"
         alt="${product.Name}"
       />
-
+      <button id="back">Back</button>
+      <button id="next">Next</button>
       <h3 class="product-card__markup">$${this.product.SuggestedRetailPrice}</h3>
       <h2 class="product-card__price">$${this.product.FinalPrice}</h2>
 
@@ -103,4 +128,7 @@ export default class ProductDetails {
       </div>`;
     return newItem;
   }
+
+
+
 }
