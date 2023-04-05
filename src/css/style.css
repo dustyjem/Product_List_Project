@@ -499,3 +499,10 @@ fieldset.checkout-summary{
     width: 300px;
     margin-left: 21px;
 }
+
+#back{
+  display: inline;
+}
+#next{
+  display: inline;
+}
